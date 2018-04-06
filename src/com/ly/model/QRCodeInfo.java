@@ -1,17 +1,21 @@
 package com.ly.model;
 
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
 public class QRCodeInfo {
     private String context;
     private int versions;
     private ErrorCorrectionLevel errorCorrectionLevel;
+    private String savaPath;
 
     public QRCodeInfo() {
     }
 
-    public QRCodeInfo(String context, int versions, String errorCorrectionLevel) {
+    public QRCodeInfo(String context, int versions, int errorCorrectionLevel, String savaPath) {
         this.context = context;
         this.versions = versions;
-        this.errorCorrectionLevel = ErrorCorrectionLevel.getErrorCorrectionLevel(errorCorrectionLevel);
+        this.errorCorrectionLevel = ErrorCorrectionLevel.forBits(errorCorrectionLevel);
+        this.savaPath = savaPath;
     }
 
     public String getContext() {
@@ -34,24 +38,15 @@ public class QRCodeInfo {
         return errorCorrectionLevel;
     }
 
-    public void ErrorCorrectionLevel(String errorCorrectionLevel) {
-        this.errorCorrectionLevel = ErrorCorrectionLevel.getErrorCorrectionLevel(errorCorrectionLevel);
+    public void setErrorCorrectionLevel(ErrorCorrectionLevel errorCorrectionLevel) {
+        this.errorCorrectionLevel = errorCorrectionLevel;
     }
 
-    private enum ErrorCorrectionLevel {
-        L, M ,Q ,H;
-        ErrorCorrectionLevel() {
-        }
+    public String getSavaPath() {
+        return savaPath;
+    }
 
-        public String getValue(){return this.toString().toLowerCase();}
-
-        public static ErrorCorrectionLevel getErrorCorrectionLevel(String country) {
-            for (ErrorCorrectionLevel errorCorrectionLevel : ErrorCorrectionLevel.values()) {
-                if (errorCorrectionLevel.getValue().equals(country.toLowerCase()))
-                    return errorCorrectionLevel;
-            }
-
-            return null;
-        }
+    public void setSavaPath(String savaPath) {
+        this.savaPath = savaPath;
     }
 }
